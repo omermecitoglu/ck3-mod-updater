@@ -10,11 +10,17 @@
     "electron": "electron ./build/main.js",
     "start": "npm run build && npm run electron"
   },
-  "keywords": ["ck3", "mod", "updater"],
+  "keywords": [
+    "ck3",
+    "mod",
+    "updater"
+  ],
   "author": "Viegnar",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^5.2.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
