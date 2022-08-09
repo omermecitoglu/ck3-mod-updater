@@ -18,12 +18,11 @@ export default function ModList({
   mods,
 }: ModListProps) {
   return (
-    <Table striped bordered hover>
-      <thead>
+    <Table striped hover className="mb-0">
+      <thead className="table-dark">
         <tr>
           <th>Name</th>
-          <th>Last Update</th>
-          <th>&nbsp;</th>
+          <th colSpan={2}>Last Update</th>
         </tr>
       </thead>
       <tbody>

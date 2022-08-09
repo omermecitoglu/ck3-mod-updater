@@ -1,0 +1,8 @@
+body {
+  overflow: hidden;
+}
+
+#mod-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
