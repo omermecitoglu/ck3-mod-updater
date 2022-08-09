@@ -53,6 +53,9 @@ module.exports = (env, argv) => ([{
       "~": path.resolve(__dirname, "src/"),
     },
   },
+  externals: {
+    nodegit: 'commonjs nodegit',
+  },
   optimization: optimizer(argv),
 }, {
   name: "preload",
@@ -93,7 +96,7 @@ module.exports = (env, argv) => ([{
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Test",
+      title: "CK3 Mod Updater",
       meta: argv.mode !== "development" ? {
         "Content-Security-Policy": {
           "http-equiv": "Content-Security-Policy",
