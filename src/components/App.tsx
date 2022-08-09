@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/Button";
+import LoadingSpinner from "./LoadingSpinner";
 import ModList, { Mod } from "./ModList";
 import React, { useEffect, useState } from "react";
 import Toolbar from "./Toolbar";
@@ -66,12 +67,14 @@ const dummy_mod_list: Mod[] = [
 ];
 
 export default function App() {
+  const [initialized, setInitialized] = useState(false);
   const [mods, setMods] = useState<Mod[]>([]);
   const [checking, setChecking] = useState(false);
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     setMods(dummy_mod_list);
+    // setInitialized(true);
   }, []);
 
   const check = () => {
@@ -83,6 +86,10 @@ export default function App() {
     console.log("update");
     setUpdating(true);
   };
+
+  if (!initialized) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="vh-100 w-100 d-flex flex-column overflow-hidden">
