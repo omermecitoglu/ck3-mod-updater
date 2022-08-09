@@ -67,27 +67,35 @@ const dummy_mod_list: Mod[] = [
 ];
 
 export default function App() {
-  const [initialized, setInitialized] = useState(false);
   const [mods, setMods] = useState<Mod[]>([]);
   const [checking, setChecking] = useState(false);
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    setMods(dummy_mod_list);
-    // setInitialized(true);
+    if (window.electronAPI) {
+      window.electronAPI.on("mods:load", (m: Mod[]) => {
+        setMods(m);
+      });
+      window.electronAPI.initApp();
+    } else {
+      setMods(dummy_mod_list);
+    }
+    return () => {
+      if (window.electronAPI) {
+        window.electronAPI.kill("mods:load");
+      }
+    };
   }, []);
 
   const check = () => {
-    console.log("check");
     setChecking(true);
   };
 
   const update = () => {
-    console.log("update");
     setUpdating(true);
   };
 
-  if (!initialized) {
+  if (!mods.length) {
     return <LoadingSpinner />;
   }
 
