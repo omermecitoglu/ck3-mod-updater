@@ -4,6 +4,8 @@
   "description": "Crusader Kings 3 Mod Updater",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint ./src --ext .ts --fix",
     "dev": "webpack serve --config-name=renderer --mode=development",
     "webpack": "webpack --progress --mode=production",
     "build": "rimraf build && npm run webpack",
