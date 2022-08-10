@@ -33,6 +33,10 @@ module.exports = (env, argv) => ([{
   module: {
     rules: [
       {
+        test: /\.node$/,
+        loader: "node-loader",
+      },
+      {
         test: /\.(ts|tsx)$/,
         loader: "ts-loader",
       },
@@ -48,13 +52,12 @@ module.exports = (env, argv) => ([{
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
     alias: {
       "~": path.resolve(__dirname, "src/"),
     },
   },
   externals: {
-    nodegit: 'commonjs nodegit',
   },
   optimization: optimizer(argv),
 }, {
