@@ -2,6 +2,10 @@ body {
   overflow: hidden;
 }
 
+#toolbar {
+  min-height: 4.375rem;
+}
+
 #mod-list {
   overflow-y: auto;
   overflow-x: hidden;

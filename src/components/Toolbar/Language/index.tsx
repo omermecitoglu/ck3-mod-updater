@@ -1,28 +1,33 @@
 import Form from "react-bootstrap/Form";
 import React, { ChangeEvent, useState } from "react";
+import i18n from "~/core/i18n";
+import { useTranslation, withTranslation } from "react-i18next";
 
 type LanguageProps = {
   initialValue: string,
   check: () => Promise<void>,
 };
 
-export default function Language({
+function Language({
   initialValue,
   check,
 }: LanguageProps) {
+  const { t } = useTranslation();
   const [value, setValue] = useState(initialValue);
 
   const handleChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    setValue(e.target.value);
+    const language = e.target.value;
+    setValue(language);
+    i18n.changeLanguage(language);
     if (window.electronAPI) {
-      const result = await window.electronAPI.setLanguage(e.target.value);
+      const result = await window.electronAPI.setLanguage(language);
       if (result) await check();
     }
   };
 
   return (
     <Form.Select
-      aria-label="Language"
+      aria-label={t("app.settings.language")}
       value={value}
       onChange={handleChange}
     >
@@ -31,3 +36,5 @@ export default function Language({
     </Form.Select>
   );
 }
+
+export default withTranslation()(Language);

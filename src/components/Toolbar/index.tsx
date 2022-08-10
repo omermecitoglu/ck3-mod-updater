@@ -25,7 +25,7 @@ export default function Toolbar({
   }, []);
 
   return (
-    <div className="p-3">
+    <div id="toolbar" className="p-3">
       <div className="row">
         <div className="col-10">
           {modsPath &&

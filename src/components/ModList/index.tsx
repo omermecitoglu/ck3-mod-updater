@@ -1,6 +1,7 @@
 import ModState, { ValidModState } from "./ModState";
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { useTranslation, withTranslation } from "react-i18next";
 
 export type ModTemplate = {
   id: string,
@@ -14,15 +15,16 @@ type ModListProps = {
   mods: ModTemplate[],
 };
 
-export default function ModList({
+function ModList({
   mods,
 }: ModListProps) {
+  const { t } = useTranslation();
   return (
     <Table striped hover className="mb-0">
       <thead className="table-dark">
         <tr>
-          <th>Name</th>
-          <th colSpan={2}>Last Update</th>
+          <th>{t("mod.name")}</th>
+          <th colSpan={2}>{t("mod.last_update")}</th>
         </tr>
       </thead>
       <tbody>
@@ -39,3 +41,5 @@ export default function ModList({
     </Table>
   );
 }
+
+export default withTranslation()(ModList);

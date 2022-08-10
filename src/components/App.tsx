@@ -4,6 +4,7 @@ import ModList, { ModTemplate } from "./ModList";
 import React, { useEffect, useState } from "react";
 import Toolbar from "./Toolbar";
 import classNames from "classnames";
+import { useTranslation, withTranslation } from "react-i18next";
 import { faDownload, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -66,7 +67,8 @@ const dummy_mod_list: ModTemplate[] = [
   },
 ];
 
-export default function App() {
+function App() {
+  const { t } = useTranslation();
   const [mods, setMods] = useState<ModTemplate[]>([]);
   const [checking, setChecking] = useState(false);
   const [updating, setUpdating] = useState(false);
@@ -116,13 +118,15 @@ export default function App() {
       <div className="d-flex flex-row-reverse my-3">
         <Button variant="primary" className="me-3" disabled={checking || updating} onClick={update}>
           <FontAwesomeIcon icon={faDownload} className={classNames("fa-fw me-2", { "fa-beat": updating })} />
-          Update
+          {t("mod.actions.update")}
         </Button>
         <Button variant="secondary" className="me-3" disabled={checking || updating} onClick={check}>
           <FontAwesomeIcon icon={faRotate} className={classNames("fa-fw me-2", { "fa-spin": checking })} />
-          Check
+          {t("mod.actions.check")}
         </Button>
       </div>
     </div>
   );
 }
+
+export default withTranslation()(App);

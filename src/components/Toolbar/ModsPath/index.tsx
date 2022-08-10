@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { useTranslation, withTranslation } from "react-i18next";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,10 +10,11 @@ type ModsPathProps = {
   check: () => Promise<void>,
 };
 
-export default function ModsPath({
+function ModsPath({
   initialValue,
   check,
 }: ModsPathProps) {
+  const { t } = useTranslation();
   const [initialized, setInitialized] = useState(false);
   const [value, setValue] = useState(initialValue);
   const [validation, setValidation] = useState(0);
@@ -53,7 +55,7 @@ export default function ModsPath({
       </InputGroup.Text>
       <Form.Control
         type="text"
-        placeholder="Mods Folder"
+        placeholder={t("app.settings.mods_folder")}
         value={value}
         onChange={handleChange}
         isValid={validation === 1}
@@ -62,3 +64,5 @@ export default function ModsPath({
     </InputGroup>
   );
 }
+
+export default withTranslation()(ModsPath);

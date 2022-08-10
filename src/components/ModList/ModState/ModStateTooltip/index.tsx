@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import Tooltip, { TooltipProps } from "react-bootstrap/Tooltip";
+import TooltipContent, { ModStateTooltipProps } from "./TooltipContent";
 
-export type ModStateTooltipProps = {
-  info: string,
-  extraInfo?: string,
-};
+export { ModStateTooltipProps };
 
 const ModStateTooltip = React.forwardRef<HTMLDivElement, TooltipProps & ModStateTooltipProps>(
   ({ popper, info, extraInfo, ...props }, ref) => {
@@ -15,9 +13,20 @@ const ModStateTooltip = React.forwardRef<HTMLDivElement, TooltipProps & ModState
     }, [popper, extraInfo]);
 
     if (extraInfo) {
-      return <Tooltip ref={ref} {...props}>{info}<br />({extraInfo})</Tooltip>;
+      return (
+        <Tooltip ref={ref} {...props}>
+          <TooltipContent
+            info={info}
+            extraInfo={extraInfo}
+          />
+        </Tooltip>
+      );
     }
-    return <Tooltip ref={ref} {...props}>{info}</Tooltip>;
+    return (
+      <Tooltip ref={ref} {...props}>
+        <TooltipContent info={info} />
+      </Tooltip>
+    );
   },
 );
 

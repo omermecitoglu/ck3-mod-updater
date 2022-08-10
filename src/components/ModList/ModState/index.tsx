@@ -17,7 +17,7 @@ export default function ModState({
   extraInfo,
 }: ModStateProps) {
   const [tooltip, setTooltip] = useState<ModStateTooltipProps>({
-    info: "Kontrol ediliyor...",
+    info: "default",
   });
   const [icon, setIcon] = useState(faQuestion);
   const [iconColor, setIconColor] = useState("text-secondary");
@@ -26,21 +26,21 @@ export default function ModState({
     switch (state) {
     case "not_installed":
       setTooltip({
-        info: "Not Installed",
+        info: "not_installed",
       });
       setIcon(faCircleMinus);
       setIconColor("text-danger");
       break;
     case "updated":
       setTooltip({
-        info: "Bu mod güncel durumda",
+        info: "updated",
       });
       setIcon(faCircleCheck);
       setIconColor("text-success");
       break;
     case "needs_update":
       setTooltip({
-        info: "Yeni bir güncelleme var",
+        info: "needs_update",
         extraInfo: extraInfo,
       });
       setIcon(faTriangleExclamation);
@@ -48,7 +48,7 @@ export default function ModState({
       break;
     default:
       setTooltip({
-        info: "Kontrol ediliyor...",
+        info: "default",
       });
       setIcon(faQuestion);
       setIconColor("text-secondary");
