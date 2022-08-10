@@ -6,7 +6,8 @@ declare global {
       on: (channel: string, fn: (...args: unknown) => void) => void,
       kill: (channel: string) => void,
       initApp: () => void,
-      loadMods: () => Promise<Mod[]>,
+      check: () => Promise<Mod[]>,
+      update: () => Promise<Mod[]>,
     },
   }
 }

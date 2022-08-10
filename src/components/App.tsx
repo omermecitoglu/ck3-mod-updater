@@ -87,12 +87,20 @@ export default function App() {
     };
   }, []);
 
-  const check = () => {
+  const check = async () => {
     setChecking(true);
+    if (window.electronAPI) {
+      setMods(await window.electronAPI.check());
+      setChecking(false);
+    }
   };
 
-  const update = () => {
+  const update = async () => {
     setUpdating(true);
+    if (window.electronAPI) {
+      setMods(await window.electronAPI.update());
+      setUpdating(false);
+    }
   };
 
   if (!mods.length) {

@@ -10,5 +10,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   initApp: () => {
     ipcRenderer.send("app:init");
   },
-  loadCharacters: () => ipcRenderer.invoke("characters:load"),
+  check: () => ipcRenderer.invoke("mods:fetch"),
+  update: () => ipcRenderer.invoke("mods:update"),
 });

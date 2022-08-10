@@ -10,6 +10,7 @@ function createWindow() {
     // transparent: true,
     // frame: false,
     maximizable: false,
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -38,21 +39,51 @@ app.on("window-all-closed", () => {
   }
 });
 
+const AllMods: Mod[] = [];
+
+async function modList() {
+  const mods = [];
+  for (const mod of AllMods) {
+    mods.push(await mod.toJSON());
+  }
+  return mods;
+}
+
 ipcMain.on("app:init", async (event) => {
   const win = BrowserWindow.fromWebContents(event.sender);
   if (!win) return;
   try {
     const mods = await getCollection("mods");
 
-    const modz = [];
-
     for (const m of mods) {
       const mod = new Mod(m.id, m.name, m.git);
+      AllMods.push(mod);
       await mod.init();
-      modz.push(await mod.toJSON());
     }
-    win.webContents.send("mods:load", modz);
+    win.webContents.send("mods:load", await modList());
   } catch (err) {
     console.error(err);
+  }
+});
+
+ipcMain.handle("mods:fetch", async () => {
+  try {
+    for (const mod of AllMods) {
+      await mod.check();
+    }
+    return await modList();
+  } catch {
+    return [];
+  }
+});
+
+ipcMain.handle("mods:update", async () => {
+  try {
+    for (const mod of AllMods) {
+      await mod.update();
+    }
+    return await modList();
+  } catch {
+    return [];
   }
 });
