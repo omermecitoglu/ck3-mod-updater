@@ -49,20 +49,17 @@ async function modList() {
   return mods;
 }
 
-ipcMain.on("app:init", async (event) => {
-  const win = BrowserWindow.fromWebContents(event.sender);
-  if (!win) return;
+ipcMain.handle("app:init", async () => {
   try {
     const mods = await getCollection("mods");
-
     for (const m of mods) {
       const mod = new Mod(m.id, m.name, m.git);
       AllMods.push(mod);
       await mod.init();
     }
-    win.webContents.send("mods:load", await modList());
+    return await modList();
   } catch (err) {
-    console.error(err);
+    return [];
   }
 });
 

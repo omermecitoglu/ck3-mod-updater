@@ -7,9 +7,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   kill: (channel: string) => {
     ipcRenderer.removeAllListeners(channel);
   },
-  initApp: () => {
-    ipcRenderer.send("app:init");
-  },
+  init: () => ipcRenderer.invoke("app:init"),
   check: () => ipcRenderer.invoke("mods:fetch"),
   update: () => ipcRenderer.invoke("mods:update"),
 });

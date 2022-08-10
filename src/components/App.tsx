@@ -71,21 +71,11 @@ export default function App() {
   const [checking, setChecking] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  useEffect(() => {
+  const init = async () => {
     if (window.electronAPI) {
-      window.electronAPI.on("mods:load", (m: Mod[]) => {
-        setMods(m);
-      });
-      window.electronAPI.initApp();
-    } else {
-      setMods(dummy_mod_list);
+      setMods(await window.electronAPI.init());
     }
-    return () => {
-      if (window.electronAPI) {
-        window.electronAPI.kill("mods:load");
-      }
-    };
-  }, []);
+  };
 
   const check = async () => {
     setChecking(true);
@@ -102,6 +92,14 @@ export default function App() {
       setUpdating(false);
     }
   };
+
+  useEffect(() => {
+    if (window.electronAPI) {
+      init();
+    } else {
+      setMods(dummy_mod_list);
+    }
+  }, []);
 
   if (!mods.length) {
     return <LoadingSpinner />;
