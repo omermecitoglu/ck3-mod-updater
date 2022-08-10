@@ -10,6 +10,8 @@ declare global {
       update: () => Promise<ModTemplate[]>,
       getModsPath: () => Promise<string>,
       setModsPath: (path: string) => Promise<boolean>,
+      getLanguage: () => Promise<string>,
+      setLanguage: (path: string) => Promise<boolean>,
     },
   }
 }

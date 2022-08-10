@@ -57,7 +57,6 @@ ipcMain.handle("app:init", async () => {
     const mods = await getCollection("mods");
 
     const modsPath = await settings.get("modsPath");
-
     if (!modsPath) {
       if (!process.env.DEFAULT_MODS_PATH) {
         throw new Error("Couldn't locate mods folder.");
@@ -66,6 +65,11 @@ ipcMain.handle("app:init", async () => {
       const userFolder = process.env.USERPROFILE as string;
       const defaultModsPath = defaultPath.replace("%USERPROFILE%", userFolder);
       await settings.set("modsPath", defaultModsPath);
+    }
+
+    const language = await settings.get("language");
+    if (!language) {
+      await settings.set("language", app.getLocale().substring(0, 2));
     }
 
     for (const m of mods) {
@@ -124,5 +128,22 @@ ipcMain.handle("mods:update", async () => {
     return await modList();
   } catch {
     return [];
+  }
+});
+
+ipcMain.handle("app:language:get", async () => {
+  try {
+    return await settings.get("language");
+  } catch {
+    return "";
+  }
+});
+
+ipcMain.handle("app:language:set", async (e, lang: string) => {
+  try {
+    await settings.set("language", lang);
+    return true;
+  } catch (err) {
+    return false;
   }
 });

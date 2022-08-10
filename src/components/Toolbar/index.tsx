@@ -1,4 +1,4 @@
-import Form from "react-bootstrap/Form";
+import Language from "./Language";
 import ModsPath from "./ModsPath";
 import React, { useEffect, useState } from "react";
 
@@ -10,12 +10,17 @@ export default function Toolbar({
   check,
 }: ToolbarProps) {
   const [modsPath, setModsPath] = useState("");
+  const [language, setLanguage] = useState("");
 
   useEffect(() => {
     if (window.electronAPI) {
       window.electronAPI.getModsPath().then(setModsPath).catch(e => alert(e.message));
+      window.electronAPI.getLanguage().then(setLanguage).catch(e => alert(e.message));
     } else {
-      setTimeout(() => setModsPath("xxxx"), 2000);
+      setTimeout(() => {
+        setModsPath("xxxx");
+        setLanguage("en");
+      }, 2000);
     }
   }, []);
 
@@ -31,10 +36,12 @@ export default function Toolbar({
           }
         </div>
         <div className="col-2">
-          <Form.Select aria-label="Language">
-            <option value="en">EN</option>
-            <option value="tr">TR</option>
-          </Form.Select>
+          {language &&
+            <Language
+              initialValue={language}
+              check={check}
+            />
+          }
         </div>
       </div>
     </div>

@@ -2,10 +2,11 @@ import path from "path";
 import settings from "electron-settings";
 import { access } from "fs/promises";
 import { Clone, Repository } from "nodegit";
+import { getLocaleCode } from "./locale";
 import { ModTemplate } from "~/components/ModList";
 
-function dateFormat(date: Date) {
-  return date.toLocaleString("tr-TR", {
+function dateFormat(date: Date, language: string) {
+  return date.toLocaleString(getLocaleCode(language), {
     dateStyle: "long",
     timeStyle: "short",
   });
@@ -82,7 +83,7 @@ export default class Mod {
     const commit = await this.repo.getHeadCommit();
     return {
       id: commit.id().tostrS(),
-      date: dateFormat(commit.date()),
+      date: dateFormat(commit.date(), await settings.get("language") as string),
     };
   }
 
@@ -94,7 +95,7 @@ export default class Mod {
     const commit = await this.repo.getReferenceCommit("origin/" + branchName);
     return {
       id: commit.id().tostrS(),
-      date: dateFormat(commit.date()),
+      date: dateFormat(commit.date(), await settings.get("language") as string),
     };
   }
 

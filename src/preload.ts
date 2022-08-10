@@ -12,4 +12,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   update: () => ipcRenderer.invoke("mods:update"),
   getModsPath: () => ipcRenderer.invoke("mods:path:get"),
   setModsPath: (path: string) => ipcRenderer.invoke("mods:path:set", path),
+  getLanguage: () => ipcRenderer.invoke("app:language:get"),
+  setLanguage: (lang: string) => ipcRenderer.invoke("app:language:set", lang),
 });
