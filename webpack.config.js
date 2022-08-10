@@ -42,7 +42,7 @@ module.exports = (env, argv) => ([{
         loader: "source-map-loader",
       },
       {
-        test: /\.wasm/,
+        test: /\.(png|jpg|gif)$/i,
         type: 'asset/resource'
       },
     ],
