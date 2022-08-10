@@ -1,6 +1,9 @@
+import "dotenv/config";
 import Mod from "./core/mod";
 import path from "path";
-import { BrowserWindow, app, ipcMain } from "electron";
+import settings from "electron-settings";
+import { BrowserWindow, app, dialog, ipcMain } from "electron";
+import { access } from "fs/promises";
 import { getCollection } from "./core/firebase";
 
 function createWindow() {
@@ -52,14 +55,49 @@ async function modList() {
 ipcMain.handle("app:init", async () => {
   try {
     const mods = await getCollection("mods");
+
+    const modsPath = await settings.get("modsPath");
+
+    if (!modsPath) {
+      if (!process.env.DEFAULT_MODS_PATH) {
+        throw new Error("Couldn't locate mods folder.");
+      }
+      const defaultPath = process.env.DEFAULT_MODS_PATH;
+      const userFolder = process.env.USERPROFILE as string;
+      const defaultModsPath = defaultPath.replace("%USERPROFILE%", userFolder);
+      await settings.set("modsPath", defaultModsPath);
+    }
+
     for (const m of mods) {
       const mod = new Mod(m.id, m.name, m.git);
       AllMods.push(mod);
       await mod.init();
     }
     return await modList();
-  } catch (err) {
+  } catch (error) {
+    dialog.showErrorBox("Error", error.message);
     return [];
+  }
+});
+
+ipcMain.handle("mods:path:get", async () => {
+  try {
+    return await settings.get("modsPath");
+  } catch {
+    return "";
+  }
+});
+
+ipcMain.handle("mods:path:set", async (e, newPath: string) => {
+  try {
+    await access(newPath);
+    await settings.set("modsPath", newPath);
+    for (const mod of AllMods) {
+      await mod.init();
+    }
+    return true;
+  } catch (err) {
+    return false;
   }
 });
 
@@ -77,7 +115,11 @@ ipcMain.handle("mods:fetch", async () => {
 ipcMain.handle("mods:update", async () => {
   try {
     for (const mod of AllMods) {
-      await mod.update();
+      if (mod.repo) {
+        await mod.update();
+      } else {
+        await mod.download();
+      }
     }
     return await modList();
   } catch {

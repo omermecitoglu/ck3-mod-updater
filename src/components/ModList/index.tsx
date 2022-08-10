@@ -2,7 +2,7 @@ import ModState, { ValidModState } from "./ModState";
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-export type Mod = {
+export type ModTemplate = {
   id: string,
   name: string,
   version: string,
@@ -11,7 +11,7 @@ export type Mod = {
 };
 
 type ModListProps = {
-  mods: Mod[],
+  mods: ModTemplate[],
 };
 
 export default function ModList({

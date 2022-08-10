@@ -1,13 +1,13 @@
 import Button from "react-bootstrap/Button";
 import LoadingSpinner from "./LoadingSpinner";
-import ModList, { Mod } from "./ModList";
+import ModList, { ModTemplate } from "./ModList";
 import React, { useEffect, useState } from "react";
 import Toolbar from "./Toolbar";
 import classNames from "classnames";
 import { faDownload, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const dummy_mod_list: Mod[] = [
+const dummy_mod_list: ModTemplate[] = [
   {
     id: "111",
     name: "Multiplayer Tweaks",
@@ -67,7 +67,7 @@ const dummy_mod_list: Mod[] = [
 ];
 
 export default function App() {
-  const [mods, setMods] = useState<Mod[]>([]);
+  const [mods, setMods] = useState<ModTemplate[]>([]);
   const [checking, setChecking] = useState(false);
   const [updating, setUpdating] = useState(false);
 
@@ -108,7 +108,7 @@ export default function App() {
   return (
     <div className="vh-100 w-100 d-flex flex-column overflow-hidden">
       <div>
-        <Toolbar />
+        <Toolbar check={check} />
       </div>
       <div id="mod-list">
         <ModList mods={mods} />

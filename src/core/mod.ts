@@ -1,8 +1,8 @@
 import path from "path";
+import settings from "electron-settings";
 import { access } from "fs/promises";
 import { Clone, Repository } from "nodegit";
-
-const mods_folder = "C:/Users/Omer/Documents/Paradox Interactive/Crusader Kings III/test";
+import { ModTemplate } from "~/components/ModList";
 
 function dateFormat(date: Date) {
   return date.toLocaleString("tr-TR", {
@@ -21,6 +21,7 @@ export default class Mod {
   name: string;
   git: string;
   repo?: Repository;
+  path?: string;
 
   constructor(id: string, name: string, git: string) {
     this.id = id;
@@ -29,25 +30,38 @@ export default class Mod {
   }
 
   async init() {
-    const repoPath = path.join(mods_folder, this.id);
+    const modsPath = await settings.get("modsPath") as string;
+    const repoPath = path.join(modsPath, this.id);
     try {
       await access(repoPath);
       this.repo = await Repository.open(repoPath);
+      this.path = repoPath;
     } catch {
-      this.repo = await Clone.clone(this.git, repoPath);
+      delete this.repo;
+      delete this.path;
     }
   }
 
-  check() {
-    if (!this.repo) {
-      throw new Error("ERROR:220C76CF12844419BEA5A28B832D75FC");
+  async download() {
+    const modsPath = await settings.get("modsPath") as string;
+    const repoPath = path.join(modsPath, this.id);
+    try {
+      this.repo = await Clone.clone(this.git, repoPath);
+      this.path = repoPath;
+    } catch (err) {
+      // do nothing
     }
-    return this.repo.fetch("origin");
+  }
+
+  async check() {
+    if (this.repo) {
+      this.repo.fetch("origin");
+    }
   }
 
   async update() {
     if (!this.repo) {
-      throw new Error("ERROR:9DD39CDE75FE4BA388E7B4611310D686");
+      throw new Error("ERROR:E5C8885EA1D043FBA366B138DBADBD28");
     }
     const current = await this.repo.getCurrentBranch();
     await this.repo.mergeBranches(current, "origin/" + current.shorthand());
@@ -84,7 +98,16 @@ export default class Mod {
     };
   }
 
-  async toJSON() {
+  async toJSON(): Promise<ModTemplate> {
+    if (!this.repo) {
+      return {
+        id:  this.id,
+        name: this.name,
+        version: "",
+        state: "not_installed",
+        updateVersion: "",
+      };
+    }
     const current = await this.getCurrentVersion();
     const latest = await this.getLatestVersion();
     return {

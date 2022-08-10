@@ -5,9 +5,11 @@ declare global {
     electronAPI: {
       on: (channel: string, fn: (...args: unknown) => void) => void,
       kill: (channel: string) => void,
-      init: () => Promise<Mod[]>,
-      check: () => Promise<Mod[]>,
-      update: () => Promise<Mod[]>,
+      init: () => Promise<ModTemplate[]>,
+      check: () => Promise<ModTemplate[]>,
+      update: () => Promise<ModTemplate[]>,
+      getModsPath: () => Promise<string>,
+      setModsPath: (path: string) => Promise<boolean>,
     },
   }
 }
