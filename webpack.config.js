@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -29,7 +30,13 @@ module.exports = (env, argv) => ([{
     path: path.resolve(__dirname, "build"),
     filename: "main.js",
   },
-  plugins: [],
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: "./lib/libcrypto-1_1-x64.dll", to: "libcrypto-1_1-x64.dll" },
+      ],
+    }),
+  ],
   module: {
     rules: [
       {
