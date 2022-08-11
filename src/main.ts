@@ -1,6 +1,5 @@
 import "dotenv/config";
 import Mod from "./core/mod";
-import icon from "~/resources/icon.png";
 import path from "path";
 import settings from "electron-settings";
 import { BrowserWindow, app, dialog, ipcMain } from "electron";
@@ -15,7 +14,6 @@ function createWindow() {
     // frame: false,
     maximizable: false,
     resizable: false,
-    icon: path.join(__dirname, icon),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },

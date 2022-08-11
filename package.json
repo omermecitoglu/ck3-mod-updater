@@ -11,9 +11,10 @@
     "webpack": "webpack --progress --mode=production",
     "build": "rimraf build && npm run webpack",
     "start": "electron ./build/main.js",
-    "package": "electron-packager build ck3-mod-updater --out dist --platform=win32 --arch=x64 --icon=./src/resources/icon.ico --asar --overwrite",
+    "package": "electron-packager build ck3-mod-updater --out dist --platform=win32 --arch=x64 --icon=src/resources/ck3.ico --asar --overwrite",
     "includeDLL": "copy lib/libcrypto-1_1-x64.dll \"./dist/ck3-mod-updater-win32-x64/\"",
-    "dist": "npm run package && npm run includeDLL"
+    "dist": "npm run package && npm run includeDLL",
+    "make": "npm run build && npm run dist"
   },
   "keywords": [
     "ck3",
