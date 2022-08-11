@@ -1,6 +1,6 @@
 import path from "path";
 import settings from "electron-settings";
-import { access, copyFile } from "fs/promises";
+import { access, appendFile, copyFile } from "fs/promises";
 import { Clone, Repository } from "nodegit";
 import { getLocaleCode } from "./locale";
 import { ModTemplate } from "~/components/ModList";
@@ -62,6 +62,7 @@ export default class Mod {
       const source = path.join(repoPath, "descriptor.mod");
       const target = path.join(modsPath, this.id + ".mod");
       await copyFile(source, target);
+      await appendFile(target, "\r\npath=\"" + repoPath.replace(/\\/g, "/") + "\"");
     } catch {
       // do nothing
     }
