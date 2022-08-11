@@ -52,7 +52,7 @@ i18n.use(initReactI18next).init({
       },
     },
   },
-  lng: "en",
+  lng: navigator.language.substring(0, 2),
   fallbackLng: "en",
   keySeparator: ".",
 

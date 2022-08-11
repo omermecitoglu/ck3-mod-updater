@@ -1,6 +1,7 @@
 import Language from "./Language";
 import ModsPath from "./ModsPath";
 import React, { useEffect, useState } from "react";
+import i18n from "~/core/i18n";
 
 type ToolbarProps = {
   check: () => Promise<void>,
@@ -12,10 +13,15 @@ export default function Toolbar({
   const [modsPath, setModsPath] = useState("");
   const [language, setLanguage] = useState("");
 
+  const changeLang = (lang: string) => {
+    setLanguage(lang);
+    i18n.changeLanguage(lang);
+  };
+
   useEffect(() => {
     if (window.electronAPI) {
       window.electronAPI.getModsPath().then(setModsPath).catch(e => alert(e.message));
-      window.electronAPI.getLanguage().then(setLanguage).catch(e => alert(e.message));
+      window.electronAPI.getLanguage().then(changeLang).catch(e => alert(e.message));
     } else {
       setTimeout(() => {
         setModsPath("xxxx");
