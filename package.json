@@ -35,8 +35,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^11.18.3",
-    "update-electron-app": "^2.0.1"
+    "react-i18next": "^11.18.3"
   },
   "devDependencies": {
     "@types/node": "^18.6.3",
