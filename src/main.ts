@@ -3,9 +3,12 @@ import Mod from "./core/mod";
 import icon from "~/resources/icon.png";
 import path from "path";
 import settings from "electron-settings";
+import update from "update-electron-app";
 import { BrowserWindow, app, dialog, ipcMain } from "electron";
 import { access } from "fs/promises";
 import { getCollection } from "./core/firebase";
+
+update();
 
 function createWindow() {
   const win = new BrowserWindow({
