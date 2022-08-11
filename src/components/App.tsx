@@ -8,65 +8,6 @@ import { useTranslation, withTranslation } from "react-i18next";
 import { faDownload, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const dummy_mod_list: ModTemplate[] = [
-  {
-    id: "111",
-    name: "Multiplayer Tweaks",
-    version: "8 Ağustos 2022 22:08",
-    state: "needs_update",
-    updateVersion: "8 Ağustos 2022 22:08",
-  },
-  {
-    id: "222",
-    name: "Less Shattered Britannia",
-    version: "8 Ağustos 2022 22:08",
-    state: "updated",
-    updateVersion: "",
-  },
-  {
-    id: "333",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-  {
-    id: "444",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-  {
-    id: "555",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-  {
-    id: "666",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-  {
-    id: "777",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-  {
-    id: "888",
-    name: "Some other mod",
-    version: "8 Ağustos 2022 22:08",
-    state: "not_installed",
-    updateVersion: "",
-  },
-];
-
 function App() {
   const { t } = useTranslation();
   const [mods, setMods] = useState<ModTemplate[]>([]);
@@ -98,8 +39,6 @@ function App() {
   useEffect(() => {
     if (window.electronAPI) {
       init();
-    } else {
-      setMods(dummy_mod_list);
     }
   }, []);
 

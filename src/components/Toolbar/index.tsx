@@ -22,11 +22,6 @@ export default function Toolbar({
     if (window.electronAPI) {
       window.electronAPI.getModsPath().then(setModsPath).catch(e => alert(e.message));
       window.electronAPI.getLanguage().then(changeLang).catch(e => alert(e.message));
-    } else {
-      setTimeout(() => {
-        setModsPath("xxxx");
-        setLanguage("en");
-      }, 2000);
     }
   }, []);
 
