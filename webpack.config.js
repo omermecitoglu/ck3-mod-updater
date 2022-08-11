@@ -34,7 +34,6 @@ module.exports = (env, argv) => ([{
     new CopyPlugin({
       patterns: [
         { from: "./src/resources/package.json", to: "package.json" },
-        { from: "./lib/libcrypto-1_1-x64.dll", to: "libcrypto-1_1-x64.dll" },
       ],
     }),
   ],

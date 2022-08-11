@@ -1,6 +1,6 @@
 import path from "path";
 import settings from "electron-settings";
-import { access } from "fs/promises";
+import { access, copyFile } from "fs/promises";
 import { Clone, Repository } from "nodegit";
 import { getLocaleCode } from "./locale";
 import { ModTemplate } from "~/components/ModList";
@@ -49,7 +49,20 @@ export default class Mod {
     try {
       this.repo = await Clone.clone(this.git, repoPath);
       this.path = repoPath;
+      await this.install();
     } catch (err) {
+      // do nothing
+    }
+  }
+
+  async install() {
+    try {
+      const modsPath = await settings.get("modsPath") as string;
+      const repoPath = path.join(modsPath, this.id);
+      const source = path.join(repoPath, "descriptor.mod");
+      const target = path.join(modsPath, this.id + ".mod");
+      await copyFile(source, target);
+    } catch {
       // do nothing
     }
   }
