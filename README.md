@@ -17,3 +17,15 @@ Now you can install the app
 To develop the UI
 
 `npm run dev`
+
+To build the app
+
+`npm run build`
+
+To start the app
+
+`npm start`
+
+To create distributables
+
+`npm run dist`

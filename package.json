@@ -10,9 +10,10 @@
     "dev": "webpack serve --config-name=renderer --mode=development",
     "webpack": "webpack --progress --mode=production",
     "build": "rimraf build && npm run webpack",
-    "dist": "rimraf dist && electron-packager build --out dist ck3-mod-updater --platform=win32 --arch=x64 --icon=./src/resources/icon.ico",
-    "electron": "electron ./build/main.js",
-    "start": "npm run build && npm run electron"
+    "start": "electron ./build/main.js",
+    "package": "electron-packager build ck3-mod-updater --out dist --platform=win32 --arch=x64 --icon=./src/resources/icon.ico --asar --overwrite",
+    "includeDLL": "copy lib/libcrypto-1_1-x64.dll \"./dist/ck3-mod-updater-win32-x64/\"",
+    "dist": "npm run package && npm run includeDLL"
   },
   "keywords": [
     "ck3",
