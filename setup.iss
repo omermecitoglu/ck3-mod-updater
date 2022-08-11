@@ -50,7 +50,6 @@ Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\LI
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\LICENSES.chromium.html"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\resources.pak"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\snapshot_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\Squirrel.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\v8_context_snapshot.bin"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\version"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Omer\Desktop\ck3-mod-updater\dist\ck3-mod-updater-win32-x64\vk_swiftshader.dll"; DestDir: "{app}"; Flags: ignoreversion
