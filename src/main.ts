@@ -58,12 +58,9 @@ ipcMain.handle("app:init", async () => {
 
     const modsPath = await settings.get("modsPath");
     if (!modsPath) {
-      if (!process.env.DEFAULT_MODS_PATH) {
-        throw new Error("Couldn't locate mods folder.");
-      }
-      const defaultPath = process.env.DEFAULT_MODS_PATH;
+      const defaultPath = "\\Documents\\Paradox Interactive\\Crusader Kings III\\mod";
       const userFolder = process.env.USERPROFILE as string;
-      const defaultModsPath = defaultPath.replace("%USERPROFILE%", userFolder);
+      const defaultModsPath = userFolder + defaultPath;
       await settings.set("modsPath", defaultModsPath);
     }
 
